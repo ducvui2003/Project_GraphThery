@@ -11,8 +11,10 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import run.FrameDemo;
 import view.MyFrame;
 
-public class ShowDialogFile implements ActionListener{
+public class ShowDialogFile implements ActionListener {
 	JFrame frameDemo = FrameDemo.frame;
+	String linkFile;
+
 	public void actionPerformed(ActionEvent e) {
 		JFileChooser fileChooser = new JFileChooser();
 		FileNameExtensionFilter txtFile = new FileNameExtensionFilter(".txt", "txt");
@@ -21,8 +23,16 @@ public class ShowDialogFile implements ActionListener{
 		int x = fileChooser.showDialog(frameDemo, "Choose File");
 		if (x == JFileChooser.APPROVE_OPTION) {
 			File f = fileChooser.getSelectedFile();
-			String linkFile = f.getAbsolutePath();
+			linkFile = f.getAbsolutePath();
 			System.out.println(linkFile);
 		}
+	}
+
+	public String getLinkFile() {
+		return linkFile;
+	}
+
+	public void setLinkFile(String linkFile) {
+		this.linkFile = linkFile;
 	}
 }
