@@ -3,8 +3,8 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.Event;
+import java.awt.EventQueue;
 import java.awt.Label;
 import java.awt.event.KeyEvent;
 
@@ -20,18 +20,46 @@ import javax.swing.KeyStroke;
 
 import controller.ShowDialogFile;
 
-/**
- * ----------------- @author nguyenvanquan7826_3 -----------------
- * ---------------nguyenvanquan7826_3.wordpress.com --------------
- */
-public class MyFrame extends JFrame {
+public class myFrame1 extends JFrame {
+
+	private JFrame frame;
 	String nameProgram = "Group 9";
 	ShowDialogFile showDialogFile = new ShowDialogFile();
 	JButton buttonOpenChooseFile;
 	MyDraw myDraw = new MyDraw();
 
-	public MyFrame() {
-		setJMenuBar(createMenuBar());
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					myFrame1 window = new myFrame1();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public myFrame1() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.setBounds(100, 100, 450, 300);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+//		setJMenuBar(createMenuBar());
 		this.setLayout(new BorderLayout());
 		JPanel panelNorth = new JPanel();
 		panelNorth.setBackground(Color.red);
@@ -68,16 +96,15 @@ public class MyFrame extends JFrame {
 	public JMenuBar createMenuBar() {
 		JMenu menu = new JMenu("File");
 
-		menu.add(createMenuItem("New", KeyEvent.VK_N, Event.CTRL_MASK));
-		menu.add(createMenuItem("Open", KeyEvent.VK_O, Event.CTRL_MASK));
-		menu.add(createMenuItem("Save", KeyEvent.VK_S, Event.CTRL_MASK));
+		menu.add(createMenuItem("New"));
+		menu.add(createMenuItem("Open"));
+		menu.add(createMenuItem("Save"));
 		menu.addSeparator();
-		menu.add(createMenuItem("Exit", KeyEvent.VK_X, Event.CTRL_MASK));
+		menu.add(createMenuItem("Exit"));
 
 		JMenu menuHelp = new JMenu("Help");
-		menuHelp.setMnemonic(KeyEvent.VK_H);
-		menuHelp.add(createMenuItem("Help", KeyEvent.VK_H, Event.CTRL_MASK));
-		menuHelp.add(createMenuItem("About", KeyEvent.VK_A, Event.CTRL_MASK));
+		menuHelp.add(createMenuItem("Help"));
+		menuHelp.add(createMenuItem("About"));
 
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.add(menu);
@@ -85,10 +112,8 @@ public class MyFrame extends JFrame {
 		return menuBar;
 	}
 
-	public JMenuItem createMenuItem(String title, int keyEvent, int event) {
+	public JMenuItem createMenuItem(String title) {
 		JMenuItem menuItem = new JMenuItem(title);
-		menuItem.setMnemonic(keyEvent);
-		menuItem.setAccelerator(KeyStroke.getKeyStroke(keyEvent, event));
 //		menuItem.addActionListener((ActionListener) controller);
 		return menuItem;
 	}
