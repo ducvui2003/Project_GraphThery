@@ -36,8 +36,14 @@ public class MyFrame extends JFrame {
 	public String linkFile;
 	public JTextArea areaMatrix;
 	JCheckBox checkBoxNonNegative, checkBoxNonDirect;
+<<<<<<< HEAD
 	
 	Graph graphRequired1;
+=======
+
+	Graph graphRequired1;
+
+>>>>>>> 8c6149e83ff8b6605f57ce182f953aed575bf2d4
 	/**
 	 * Launch the application.
 	 */
@@ -47,7 +53,7 @@ public class MyFrame extends JFrame {
 				try {
 					MyFrame window = new MyFrame();
 					window.setVisible(true);
-					window.setSize(700,500);
+					window.setSize(700, 500);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -133,26 +139,27 @@ public class MyFrame extends JFrame {
 
 	public JPanel createPanelRequire1_2_3() {
 //	Panel North 
-		JPanel panelChild = new JPanel(new GridLayout(1, 3, 5, 5));
+		JPanel panelChild = new JPanel(new GridLayout(1, 2, 5, 5));
 		panelChild.setLayout(new BoxLayout(panelChild, BoxLayout.X_AXIS));
-		RectanglePanel panel1 = new RectanglePanel("Chọn file");
-		JButton buttonOpenChooseFile = new JButton("Choose file");
 		ShowFileChoose showFileChoose = new ShowFileChoose(this);
-		buttonOpenChooseFile.addActionListener(showFileChoose);
-		panel1.add(buttonOpenChooseFile);
-		panel1.setAlignmentX(Component.LEFT_ALIGNMENT);
 		RectanglePanel panel2 = new RectanglePanel("Yêu cầu 1");
+		panel2.setLayout(new GridLayout(2, 2, 5, 5));
 		panel2.setAlignmentX(Component.CENTER_ALIGNMENT);
 		RectanglePanel panel3 = new RectanglePanel("Yêu cầu 2");
 		panel3.add(new Label("kjaslkdsja"));
 		panel3.setAlignmentX(Component.LEFT_ALIGNMENT);
-		panelChild.add(panel1);
 		panelChild.add(panel2);
 		panel2.setLayout(new GridLayout(0, 2, 0, 0));
+		JButton buttonOpenChooseFile = new JButton("Choose file");
+		panel2.add(buttonOpenChooseFile);
+		buttonOpenChooseFile.addActionListener(showFileChoose);
 		
+		JPanel panel = new JPanel();
+		panel2.add(panel);
+
 		checkBoxNonNegative = new JCheckBox("Non negative");
 		panel2.add(checkBoxNonNegative);
-		
+
 		checkBoxNonDirect = new JCheckBox("Non directed");
 		panel2.add(checkBoxNonDirect);
 		checkBoxNonDirect.setEnabled(false);
