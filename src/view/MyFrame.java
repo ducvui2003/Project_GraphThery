@@ -3,8 +3,8 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.Event;
+import java.awt.EventQueue;
 import java.awt.Label;
 import java.awt.event.KeyEvent;
 
@@ -15,41 +15,76 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
 import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
 
 import controller.ShowDialogFile;
+import java.awt.GridLayout;
+import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 
-/**
- * ----------------- @author nguyenvanquan7826_3 -----------------
- * ---------------nguyenvanquan7826_3.wordpress.com --------------
- */
 public class MyFrame extends JFrame {
+
+	private JFrame frame;
 	String nameProgram = "Group 9";
 	ShowDialogFile showDialogFile = new ShowDialogFile();
 	JButton buttonOpenChooseFile;
 	MyDraw myDraw = new MyDraw();
+	JTextArea areaMatrix;
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					MyFrame window = new MyFrame();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 
+	/**
+	 * Create the application.
+	 */
 	public MyFrame() {
-		setJMenuBar(createMenuBar());
-		this.setLayout(new BorderLayout());
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.setBounds(100, 100, 450, 300);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+//		setJMenuBar(createMenuBar());
+		getContentPane().setLayout(new BorderLayout());
 		JPanel panelNorth = new JPanel();
 		panelNorth.setBackground(Color.red);
-		this.add(panelNorth, BorderLayout.NORTH);
+		getContentPane().add(panelNorth, BorderLayout.NORTH);
+		panelNorth.setLayout(new GridLayout(0, 1, 5, 5));
 		panelNorth.add(createPanelRequire1_2_3());
 
 		JPanel panelWest = new JPanel();
-		this.add(panelWest, BorderLayout.EAST);
-		panelWest.setBackground(Color.black);
-		panelWest.add(createPanelRequire4_5());
+		panelWest.setLayout(new BorderLayout());
+		getContentPane().add(panelWest, BorderLayout.EAST);
+		panelWest.add(createPanelRequire4_5(), BorderLayout.NORTH);
+		JPanel panelMatrix = createMatrix();
+		panelWest.add(panelMatrix, BorderLayout.CENTER);
 
 		JPanel panelCenter = new JPanel(new BorderLayout());
 		panelCenter.add(myDraw, BorderLayout.CENTER);
-		this.add(panelCenter, BorderLayout.CENTER);
+		getContentPane().add(panelCenter, BorderLayout.CENTER);
 		panelCenter.add(createPanelShowGraphic());
 
 		JPanel panelSouth = new JPanel(new BorderLayout());
-		this.add(panelSouth, BorderLayout.SOUTH);
+		getContentPane().add(panelSouth, BorderLayout.SOUTH);
 		JTextArea area = new JTextArea(4, 5);
 		panelSouth.add(area, BorderLayout.CENTER);
 		area.setEditable(false);
@@ -68,16 +103,15 @@ public class MyFrame extends JFrame {
 	public JMenuBar createMenuBar() {
 		JMenu menu = new JMenu("File");
 
-		menu.add(createMenuItem("New", KeyEvent.VK_N, Event.CTRL_MASK));
-		menu.add(createMenuItem("Open", KeyEvent.VK_O, Event.CTRL_MASK));
-		menu.add(createMenuItem("Save", KeyEvent.VK_S, Event.CTRL_MASK));
+		menu.add(createMenuItem("New"));
+		menu.add(createMenuItem("Open"));
+		menu.add(createMenuItem("Save"));
 		menu.addSeparator();
-		menu.add(createMenuItem("Exit", KeyEvent.VK_X, Event.CTRL_MASK));
+		menu.add(createMenuItem("Exit"));
 
 		JMenu menuHelp = new JMenu("Help");
-		menuHelp.setMnemonic(KeyEvent.VK_H);
-		menuHelp.add(createMenuItem("Help", KeyEvent.VK_H, Event.CTRL_MASK));
-		menuHelp.add(createMenuItem("About", KeyEvent.VK_A, Event.CTRL_MASK));
+		menuHelp.add(createMenuItem("Help"));
+		menuHelp.add(createMenuItem("About"));
 
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.add(menu);
@@ -85,17 +119,15 @@ public class MyFrame extends JFrame {
 		return menuBar;
 	}
 
-	public JMenuItem createMenuItem(String title, int keyEvent, int event) {
+	public JMenuItem createMenuItem(String title) {
 		JMenuItem menuItem = new JMenuItem(title);
-		menuItem.setMnemonic(keyEvent);
-		menuItem.setAccelerator(KeyStroke.getKeyStroke(keyEvent, event));
 //		menuItem.addActionListener((ActionListener) controller);
 		return menuItem;
 	}
 
 	public JPanel createPanelRequire1_2_3() {
 //	Panel North 
-		JPanel panelChild = new JPanel();
+		JPanel panelChild = new JPanel(new GridLayout(1, 3, 5, 5));
 		panelChild.setLayout(new BoxLayout(panelChild, BoxLayout.X_AXIS));
 		RectanglePanel panel1 = new RectanglePanel("Chọn file");
 		buttonOpenChooseFile = new JButton("Choose file");
@@ -111,10 +143,7 @@ public class MyFrame extends JFrame {
 		panelChild.add(panel1);
 		panelChild.add(panel2);
 		panelChild.add(panel3);
-		JPanel panelParent = new JPanel();
-		panelParent.setLayout(new BorderLayout());
-		panelParent.add(panelChild, BorderLayout.CENTER);
-		return panelParent;
+		return panelChild;
 
 	}
 
@@ -129,21 +158,40 @@ public class MyFrame extends JFrame {
 
 	public JPanel createPanelRequire4_5() {
 		JPanel panelChild = new JPanel();
-		panelChild.setLayout(new BoxLayout(panelChild, BoxLayout.Y_AXIS));
+		panelChild.setLayout(new GridLayout(3, 1, 5, 5));
 		RectanglePanel panel1 = new RectanglePanel("Yêu cầu 3");
-		panel1.setAlignmentX(Component.TOP_ALIGNMENT);
 		RectanglePanel panel2 = new RectanglePanel("Yêu cầu 4");
 		panel2.add(new Label("kjaslkdsja"));
-		panel2.setAlignmentX(Component.CENTER_ALIGNMENT);
 		RectanglePanel panel3 = new RectanglePanel("Yêu cầu 5");
 		panel3.add(new Label("kjaslkdsja"));
-		panel3.setAlignmentX(Component.BOTTOM_ALIGNMENT);
 		panelChild.add(panel1);
+
+		JLabel lblNewLabel = new JLabel("111111111111111111");
+		panel1.add(lblNewLabel);
 		panelChild.add(panel2);
 		panelChild.add(panel3);
-		JPanel panelParent = new JPanel();
-		panelParent.setLayout(new BorderLayout());
-		panelParent.add(panelChild, BorderLayout.CENTER);
-		return panelParent;
+		return panelChild;
 	}
+
+	public JPanel createMatrix() {
+		JPanel panelMatrix = new JPanel(new BorderLayout());
+		areaMatrix = new JTextArea();
+		areaMatrix.setEditable(false);
+		panelMatrix.add(areaMatrix, BorderLayout.CENTER);
+
+		JScrollBar hBar = new JScrollBar(JScrollBar.HORIZONTAL, 30, 20, 0, 200);
+		JScrollBar vBar = new JScrollBar(JScrollBar.VERTICAL, 30, 40, 0, 200);
+		panelMatrix.add(hBar, BorderLayout.SOUTH);
+		panelMatrix.add(vBar, BorderLayout.EAST);
+		return panelMatrix;
+	}
+
+	public JTextArea getAreaMatrix() {
+		return areaMatrix;
+	}
+
+	public void setAreaMatrix(JTextArea areaMatrix) {
+		this.areaMatrix = areaMatrix;
+	}
+
 }
