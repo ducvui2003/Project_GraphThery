@@ -6,10 +6,12 @@ import java.awt.Component;
 import java.awt.Event;
 import java.awt.EventQueue;
 import java.awt.Label;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -19,19 +21,23 @@ import javax.swing.JScrollBar;
 import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
 
-import controller.ShowDialogFile;
+import controller.ShowCheckBox;
+import controller.ShowFileChoose;
+import model.Graph;
+
 import java.awt.GridLayout;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 
 public class MyFrame extends JFrame {
 
-	private JFrame frame;
 	String nameProgram = "Group 9";
-	ShowDialogFile showDialogFile = new ShowDialogFile();
-	JButton buttonOpenChooseFile;
 	MyDraw myDraw = new MyDraw();
-	JTextArea areaMatrix;
+	public String linkFile;
+	public JTextArea areaMatrix;
+	JCheckBox checkBoxNonNegative, checkBoxNonDirect;
+	
+	Graph graphRequired1,;
 	/**
 	 * Launch the application.
 	 */
@@ -40,7 +46,8 @@ public class MyFrame extends JFrame {
 			public void run() {
 				try {
 					MyFrame window = new MyFrame();
-					window.frame.setVisible(true);
+					window.setVisible(true);
+					window.setSize(700,500);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -59,9 +66,8 @@ public class MyFrame extends JFrame {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 //		setJMenuBar(createMenuBar());
 		getContentPane().setLayout(new BorderLayout());
@@ -93,7 +99,7 @@ public class MyFrame extends JFrame {
 
 	public void display() {
 		this.setTitle(nameProgram);
-		this.setSize(500, 500);
+		this.setSize(552, 498);
 		this.setVisible(true);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -130,18 +136,29 @@ public class MyFrame extends JFrame {
 		JPanel panelChild = new JPanel(new GridLayout(1, 3, 5, 5));
 		panelChild.setLayout(new BoxLayout(panelChild, BoxLayout.X_AXIS));
 		RectanglePanel panel1 = new RectanglePanel("Chọn file");
-		buttonOpenChooseFile = new JButton("Choose file");
-		buttonOpenChooseFile.addActionListener(showDialogFile);
+		JButton buttonOpenChooseFile = new JButton("Choose file");
+		ShowFileChoose showFileChoose = new ShowFileChoose(this);
+		buttonOpenChooseFile.addActionListener(showFileChoose);
 		panel1.add(buttonOpenChooseFile);
 		panel1.setAlignmentX(Component.LEFT_ALIGNMENT);
 		RectanglePanel panel2 = new RectanglePanel("Yêu cầu 1");
-		panel2.add(new Label("kjaslkdsja"));
 		panel2.setAlignmentX(Component.CENTER_ALIGNMENT);
 		RectanglePanel panel3 = new RectanglePanel("Yêu cầu 2");
 		panel3.add(new Label("kjaslkdsja"));
 		panel3.setAlignmentX(Component.LEFT_ALIGNMENT);
 		panelChild.add(panel1);
 		panelChild.add(panel2);
+		panel2.setLayout(new GridLayout(0, 2, 0, 0));
+		
+		checkBoxNonNegative = new JCheckBox("Non negative");
+		panel2.add(checkBoxNonNegative);
+		
+		checkBoxNonDirect = new JCheckBox("Non directed");
+		panel2.add(checkBoxNonDirect);
+		checkBoxNonDirect.setEnabled(false);
+		ShowCheckBox showCheckBox = new ShowCheckBox(this);
+		checkBoxNonNegative.addActionListener(showCheckBox);
+//		checkBoxNonDirect.addActionListener(showCheckBox);
 		panelChild.add(panel3);
 		return panelChild;
 
@@ -179,10 +196,12 @@ public class MyFrame extends JFrame {
 		areaMatrix.setEditable(false);
 		panelMatrix.add(areaMatrix, BorderLayout.CENTER);
 
-		JScrollBar hBar = new JScrollBar(JScrollBar.HORIZONTAL, 30, 20, 0, 200);
-		JScrollBar vBar = new JScrollBar(JScrollBar.VERTICAL, 30, 40, 0, 200);
-		panelMatrix.add(hBar, BorderLayout.SOUTH);
-		panelMatrix.add(vBar, BorderLayout.EAST);
+//		JScrollBar hBar = new JScrollBar(JScrollBar.HORIZONTAL, 30, 20, 0, 200);
+//		JScrollBar vBar = new JScrollBar(JScrollBar.VERTICAL, 30, 40, 0, 200);
+//		panelMatrix.add(hBar, BorderLayout.SOUTH);
+//		panelMatrix.add(vBar, BorderLayout.EAST);
+		JScrollPane jScrollPane = new JScrollPane(areaMatrix);
+		panelMatrix.add(jScrollPane);
 		return panelMatrix;
 	}
 
@@ -192,6 +211,30 @@ public class MyFrame extends JFrame {
 
 	public void setAreaMatrix(JTextArea areaMatrix) {
 		this.areaMatrix = areaMatrix;
+	}
+
+	public String getLinkFile() {
+		return linkFile;
+	}
+
+	public void setLinkFile(String linkFile) {
+		this.linkFile = linkFile;
+	}
+
+	public JCheckBox getCheckBoxNonNegative() {
+		return checkBoxNonNegative;
+	}
+
+	public void setCheckBoxNonNegative(JCheckBox checkBoxNonNegative) {
+		this.checkBoxNonNegative = checkBoxNonNegative;
+	}
+
+	public JCheckBox getCheckBoxNonDirect() {
+		return checkBoxNonDirect;
+	}
+
+	public void setCheckBoxNonDirect(JCheckBox checkBoxNonDirect) {
+		this.checkBoxNonDirect = checkBoxNonDirect;
 	}
 
 }

@@ -1,8 +1,10 @@
 package model;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Stack;
@@ -10,6 +12,7 @@ import java.util.Stack;
 public abstract class Graph {
 	protected int numVex;
 	protected int[][] matrix;
+
 	public int[][] getMatrix() {
 		return matrix;
 	}
@@ -75,6 +78,27 @@ public abstract class Graph {
 				}
 				row++;
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void writeFile(String filePath) {
+		int[][] matrix = this.matrix;
+		File file = new File(filePath);
+		try {
+			FileWriter fileWriter = new FileWriter(file);
+			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+			bufferedWriter.write(matrix.length + "");
+			bufferedWriter.newLine();
+			for (int i = 0; i < matrix.length; i++) {
+				for (int j = 0; j < matrix[i].length; j++) {
+					bufferedWriter.write(matrix[i][j] + " ");
+				}
+				bufferedWriter.newLine();
+			}
+			bufferedWriter.close();
+			fileWriter.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

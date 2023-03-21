@@ -343,4 +343,30 @@ public class DirectGraph extends Graph {
 	public void findHamiltonPath() {
 		// TODO Auto-generated method stub
 	}
+
+//	Procject
+//	Yêu cầu 1
+//	1
+	public int[][] adjacencyMatrixNonnegative() {
+		int[][] newMatrix = new int[matrix.length][matrix.length];
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = 0; j < matrix[i].length; j++) {
+				newMatrix[i][j] = Math.abs(matrix[i][j]);
+			}
+		}
+		return newMatrix;
+	}
+
+	public int[][] translateMatrix() {
+		int[][] newMatrix = adjacencyMatrixNonnegative();
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = 0; j < matrix[i].length; j++) {
+				if (matrix[i][j] > 0) {
+					newMatrix[i][j] = matrix[i][j];
+					newMatrix[j][i] = matrix[i][j];
+				}
+			}
+		}
+		return newMatrix;
+	}
 }
