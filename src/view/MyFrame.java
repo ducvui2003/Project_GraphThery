@@ -37,11 +37,11 @@ public class MyFrame extends JFrame {
 	public JTextArea areaMatrix;
 	JCheckBox checkBoxNonNegative, checkBoxNonDirect;
 	
-	Graph graphRequired1,;
+	Graph graphRequired1;
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public  static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {

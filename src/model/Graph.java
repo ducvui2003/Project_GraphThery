@@ -105,20 +105,10 @@ public abstract class Graph {
 	}
 
 	public String printMatrix() {
-		String result = "\t";
-		for (int edge = 0; edge < numVex; edge++) {
-			result += (char) ('A' + edge) + "\t";
-		}
-		result += "\n\t";
-		for (int i = 0; i < numVex; i++) {
-			result += "-\t";
-		}
-		result += "\n";
-
+		String result = " ";
 		for (int row = 0; row < matrix.length; row++) {
-			result += (char) ('A' + row) + "-\t";
 			for (int col = 0; col < matrix[row].length; col++) {
-				result += matrix[row][col] + "\t";
+				result += matrix[row][col] + " ";
 			}
 			result += "\n";
 		}

@@ -37,7 +37,7 @@ public class ShowFileChoose implements ActionListener {
 			File f = fileChooser.getSelectedFile();
 			frame.setLinkFile(f.getAbsolutePath());
 		}
-		System.out.println(frame.getLinkFile());
+//		System.out.println(frame.getLinkFile());
 		showMatrix(frame.linkFile);
 	}
 
